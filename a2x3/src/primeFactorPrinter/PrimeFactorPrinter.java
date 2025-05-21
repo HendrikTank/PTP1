@@ -21,8 +21,8 @@ package primeFactorPrinter;
 /**
  * PFP :  {@link PrimeFactorPrinter} - see task.
  * 
- * @author   (your name(s)) 
- * @version  (a version number or a date)
+ * @author  (Hendrik, Christoph Tank) 
+ * @version (1.0.0)
  */
 public class PrimeFactorPrinter {
     
@@ -32,91 +32,77 @@ public class PrimeFactorPrinter {
      * @param number the number to be factorized
      */
     public void printFactorization( long number ){
-        //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-        //###
-        //###
-        //###
-        //###           HIER kommt Ihr Code hin
-        //###
-        //###                    VVVV
-        //###                    VVVV
-        //###                    VVVV
-        //###   VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-        //###      VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-        //###         VVVVVVVVVVVVVVVVVVVVVVVVVV
-        //###            VVVVVVVVVVVVVVVVVVVV
-        //###               VVVVVVVVVVVVVV
-        //###                  VVVVVVVV
-        //###                     VV
-        
-        
-        
+        // handling for 0 input (special case)
     	if (number == 0) {
             System.out.print("0 = 0");
             return;
         }
+    	// handling for 1 input (special case)
         if (number == 1) {
             System.out.print("1 = 1");
             return;
         }
-
+        
+        // check if number is negative, if true, use absolute
         boolean isNegative = number < 0;
-        long n = isNegative ? -number : number;
-
+        long value = isNegative ? -number : number; // use conditional operator to return absolute value by negating the value variable
+        
+        // first console output
         System.out.print(number + " = ");
 
-        boolean firstFactor = true;
-
+        boolean firstFactor = true; // flag for tracking first value
+        
+        // if neg, use -1 for first value
         if (isNegative) {
             System.out.print("-1");
             firstFactor = false;
-            if (n == 1) {
+            // if value is 1 after negation
+            if (value == 1) {
                 return;
             }
             System.out.print(" * ");
-            firstFactor = true;
+            firstFactor = true; // reset for remaining values (to get "-1 * x * ...)
         }
 
         // Handle factor 2
-        while (n % 2 == 0) {
+        while (value % 2 == 0) {
             if (firstFactor) {
                 System.out.print("2");
                 firstFactor = false;
             } else {
                 System.out.print("*2");
             }
-            n /= 2;
+            value /= 2; // div value by 2 each time its a factor
         }
 
         // Handle odd factors
-        long i = 3;
-        long sqrtN = integerSquareRoot(n);
-        while (i <= sqrtN) {
-            while (n % i == 0) {
+        long primeFactorCandidate = 3;
+        long sqrtN = integerSquareRoot(value); // ref helper method, call with value
+        while (primeFactorCandidate <= sqrtN) {
+            // divisor divs value in while loop until modulo is 0
+            while (value % primeFactorCandidate == 0) {
                 if (firstFactor) {
-                    System.out.print(i);
+                    System.out.print(primeFactorCandidate);
                     firstFactor = false;
                 } else {
-                    System.out.print("*" + i);
+                    System.out.print("*" + primeFactorCandidate);
                 }
-                n /= i;
-                sqrtN = integerSquareRoot(n); // Recompute after division
+                value /= primeFactorCandidate; //value = value/divider
+                sqrtN = integerSquareRoot(value); // update after division
             }
-            i += 2;
-            sqrtN = integerSquareRoot(n); // Recompute for next iteration
-        }
+            primeFactorCandidate += 2;// increment counter
+            sqrtN = integerSquareRoot(value); // update for next iteration
+        }// maybe do
 
         // Handle remaining prime factor
-        if (n > 1) {
+        if (value > 1) {
             if (firstFactor) {
-                System.out.print(n);
+                System.out.print(value);
             } else {
-                System.out.print("*" + n);
+                System.out.print("*" + value);
             }
         }
-        
-        
-        
+
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         // Sofern Sie kein Vorwissen haben und/oder NICHT wissen was Sie tun
         // führen Sie KEINE! Änderungen unterhalb dieser Zeilen durch.
