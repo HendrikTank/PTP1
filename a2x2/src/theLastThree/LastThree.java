@@ -21,8 +21,8 @@ package theLastThree;
 /**
  * The {@link LastThree} - see task
  * 
- * @author  (your name(s)) 
- * @version (a version number or a date)
+ * @author  Hendrik, Christoph Tank
+ * @version v1.0.0
  */
 public class LastThree {
     
@@ -39,8 +39,9 @@ public class LastThree {
     //
     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     
-
-    private int count = 0;
+    // declare variables and initialize the counter variable
+    // counter var initialized here to make sure printLastThree can be called at any time and return something (hint string)
+    private int upto3Counter;
     private int oldest;
     private int middle;
     private int newest;
@@ -49,8 +50,7 @@ public class LastThree {
      * in the beginning there isn't any number known
      */
     public LastThree(){
-        // U.U. muss hier Code ergänzt werden.
-        // ... ???
+        upto3Counter = 0;
     }//method()
     
     
@@ -59,12 +59,15 @@ public class LastThree {
      * print the last three numbers/values
      */
     public void printLastThree() {
-        if (count >= 3) {
-            System.out.println(oldest + " " + middle + " " + newest);
-        } else if (count == 2) {
-            System.out.println(oldest + " " + middle);
-        } else if (count == 1) {
-            System.out.println(oldest);
+        switch (upto3Counter) {
+            case 0:
+                System.out.println("Kein Wert");
+            case 1:
+                System.out.println(oldest);
+            case 2:
+                System.out.println(oldest + " " + middle);
+            default:
+                System.out.println(oldest + " " + middle + " " + newest);
         }
     }//method()
     
@@ -74,24 +77,11 @@ public class LastThree {
      * @param value  current value
      */
     public void processNewValue(int value) {
-        if (count < 3) {
-            switch (count) {
-                case 0:
-                    oldest = value;
-                    break;
-                case 1:
-                    middle = value;
-                    break;
-                case 2:
-                    newest = value;
-                    break;
-            }
-            count++;
-        } else {
-            oldest = middle;
-            middle = newest;
-            newest = value;
-        }
+        // shift values each iteration
+        oldest = middle;
+        middle = newest;
+        newest = value;
+        if( upto3Counter<3 )  upto3Counter++;
     }//method()
     
 }
